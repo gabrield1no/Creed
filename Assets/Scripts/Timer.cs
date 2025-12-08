@@ -3,32 +3,59 @@ using UnityEngine;
 
 public class Timer : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI textotTimer;
+
+    public string nomeDoFilho = "GameOver";
+
+
+    [SerializeField] TextMeshProUGUI textoTimer;
     [SerializeField] float tempoRestante;
+
+
+
     public bool acabou = false;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+
+
+
+// Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        Time.timeScale = 1f;
+       
+        Transform filho = transform.Find(nomeDoFilho);
+        filho.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
+
         if (tempoRestante > 0)
-	{
-	    tempoRestante = tempoRestante - Time.deltatime;
-    	}
-	int minutos = Mathf.FloorToInt(tempoRestante / 60);
-	int segundos = Mathf.FloorToInt(tempoRestante % 60);
-	textoTimer.text = string.Format("{0:00}:{1:00}",minutos,segundos);
-	else
-	{
-	tempoRestante = 0;
-	textoTimer.color = Color.red;
-	//GamerOver();
-	parou = true
-	Time.timeScale = 0f;
-	}
+        {
+           tempoRestante = tempoRestante - Time.deltaTime;
+
+        }
+
+        else
+        {
+           tempoRestante = 0;
+           textoTimer.color = Color.red;
+           //GameOver();
+           acabou = true;
+
+           Transform filho = transform.Find(nomeDoFilho);
+           filho.gameObject.SetActive(true);
+
+
+           Time.timeScale = 0f;
+        }
+
+
+        int minutos = Mathf.FloorToInt(tempoRestante / 60);
+        int segundos = Mathf.FloorToInt(tempoRestante % 60);
+   
+        textoTimer.text = string.Format("{0:00}:{1:00}", minutos, segundos);
+
+
     }
 }
